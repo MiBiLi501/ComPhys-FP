@@ -3,5 +3,9 @@ class Environment():
         self.weight = weight
         self.height = height
 
-        self.dynamicObject = list()
-        self.staticObject = list()
+        self.dynamicObjects = list()
+        self.staticObjects = list()
+    
+    def update(self):
+        for object in self.dynamicObjects:
+            object.update()
