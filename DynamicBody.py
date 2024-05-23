@@ -40,7 +40,6 @@ class Point():
         netForce += self.mass * GRAVITY * np.array((0, 1))
 
         if(self.curPos[1] > 600):
-            netForce[1] = -abs(netForce[1])
             self.velocity[1] = -abs(self.velocity[1]) * RESTITUTION
     
         self.curPos += self.velocity*dt + 0.5*netForce/self.mass*dt*dt
