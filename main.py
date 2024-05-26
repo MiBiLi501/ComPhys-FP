@@ -3,6 +3,7 @@ import time
 
 from Environment import Environment
 from DynamicBody import *
+import Shape
 
 pyg.font.init()
 # WINDOW_SIZE = 
@@ -18,14 +19,18 @@ coord = (100, 50)
 
 env = Environment(1000, 600)
 
-p1, p2, p3 = Point(pos=(200, 200)), Point(pos=(200, 400)), Point(pos=(300, 200))
-body = SpringMassBody(origin=(200, 200), points=[p1, p2, p3], springs=[Spring(obj1=p1, obj2=p2, s=1, l=100, d=0.5), Spring(obj1=p1, obj2=p3, s=1, l=100, d=0.1), Spring(obj1=p2, obj2=p3, s=1, l=100, d=0.1)])
+# p1, p2, p3, p4 = Point(pos=(200, 200)), Point(pos=(200, 150)), Point(pos=(400, 200)), Point(pos=(400, 400))
+# p5, p6, p7, p8 = Point(pos=(400, 200)), Point(pos=(400, 150)), Point(pos=(600, 200)), Point(pos=(600, 400))
+# p9, p10 = Point(pos=(400, 200)), Point(pos=(400, 150))
+# body = SpringMassBody(origin=(200, 200), points=[p1, p2, p3, p4, p5, p6, p7, p8, p9, p10], springs=[Spring(obj1=p1, obj2=p2, s=1, l=100, d=0.5), Spring(obj1=p1, obj2=p3, s=1, l=100, d=0.5), Spring(obj1=p2, obj2=p3, s=1, l=100, d=0.5), Spring(obj1=p4, obj2=p3, s=1, l=100, d=0.5), Spring(obj1=p1, obj2=p4, s=1, l=100, d=0.5), Spring(obj1=p2, obj2=p4, s=1, l=100, d=0.5), Spring(obj1=p5, obj2=p6, s=1, l=100, d=0.5), Spring(obj1=p5, obj2=p7, s=1, l=100, d=0.5), Spring(obj1=p6, obj2=p7, s=1, l=100, d=0.5), Spring(obj1=p8, obj2=p7, s=1, l=100, d=0.5), Spring(obj1=p5, obj2=p8, s=1, l=100, d=0.5), Spring(obj1=p6, obj2=p8, s=1, l=100, d=0.5), Spring(obj1=p9, obj2=p10, s=1, l=100, d=0.5), Spring(obj1=p2, obj2=p9, s=1, l=150, d=0.5), Spring(obj1=p5, obj2=p9, s=1, l=150, d=0.5), Spring(obj1=p1, obj2=p5, s=1, l=100, d=0.5), Spring(obj1=p6, obj2=p8, s=1, l=150, d=0.5)])
 
-p4, p5, p6 = Point(pos=(600, 200)), Point(pos=(270, 600)), Point(pos=(600, 500))
-body2 = SpringMassBody(origin=(200, 200), points=[p4, p5, p6], springs=[Spring(obj1=p5, obj2=p6, s=1, l=100, d=0.1), Spring(obj1=p4, obj2=p6, s=1, l=100, d=0.1)])
+# p4, p5, p6 = Point(pos=(600, 200)), Point(pos=(270, 600)), Point(pos=(600, 500))
+# body2 = SpringMassBody(origin=(200, 200), points=[p4, p5, p6], springs=[Spring(obj1=p5, obj2=p6, s=1, l=100, d=0.1), Spring(obj1=p4, obj2=p6, s=1, l=100, d=0.1)])
 
-env.add_dynamic_body(body)
-env.add_dynamic_body(body2)
+# env.add_dynamic_body(body)
+# env.add_dynamic_body(body2)
+
+env.add_dynamic_body(Shape.ReinforcedRectangle(origin=(100, -1000), width=10, height=10, gap=100))
 
 cur = time.time()
 prev = cur

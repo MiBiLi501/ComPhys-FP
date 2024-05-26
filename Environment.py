@@ -1,8 +1,8 @@
 from DynamicBody import SpringMassBody
 
 class Environment():
-    def __init__(self, weight:int, height:int):
-        self.weight = weight
+    def __init__(self, width:int, height:int):
+        self.width = width
         self.height = height
 
         self.dynamicObjects:list[SpringMassBody] = list()

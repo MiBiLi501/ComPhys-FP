@@ -6,12 +6,11 @@ from math import hypot, tanh
 from Settings import *
 
 class Point():
-    def __init__(self, pos:tuple[float, float] = (0, 0), mass:float=1):
+    def __init__(self, pos:tuple[float, float] = (0, 0), mass:float=1, radius:float=5):
         self.curPos:np.ndarray = np.array(pos, dtype=float)
         self.prev:np.ndarray = self.curPos
         self.velocity = np.zeros(2, dtype=float)
-        self.force = np.array((0, GRAVITY), dtype=float)
-        self.radius = 10
+        self.radius = radius
         self.static = False
         self.mass = mass
         self.connectedSpring:list[Spring] = list()
@@ -32,7 +31,7 @@ class Point():
         return self.velocity.copy()
 
     def update(self, dt:float):
-        netForce = self.get_force()
+        netForce = np.zeros(2)
         
         for spring in self.connectedSpring:
             netForce += spring.get_force() * (1 if self == spring.get_origin_object() else -1)
@@ -88,7 +87,7 @@ class Spring():
         pyg.draw.line(surface=screen, color=color, start_pos=self.obj1.curPos, end_pos=self.obj2.curPos, width=3)
 
 class SpringMassBody():
-    def __init__(self, origin:tuple[float, float], points:list[Point]|None = None, springs:list[Spring]|None = None):
+    def __init__(self, points:list[Point]|None = None, springs:list[Spring]|None = None):
         self.points = points
         self.springs = springs
 
