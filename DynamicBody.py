@@ -18,6 +18,9 @@ class Point():
     def get_curPos(self):
         return self.curPos.copy()
 
+    def set_curPos(self, pos:tuple[float, float]):
+        self.curPos = np.array(pos, dtype=float)
+
     def add_force(self, force:np.ndarray):
         self.force += force
     
@@ -27,10 +30,15 @@ class Point():
     def get_force(self):
         return self.force.copy()
     
+    def set_static(self, state):
+        self.static = state
+    
     def get_velocity(self):
         return self.velocity.copy()
 
     def update(self, dt:float):
+        if self.static: return
+
         netForce = np.zeros(2)
         
         for spring in self.connectedSpring:
@@ -38,8 +46,18 @@ class Point():
         
         netForce += self.mass * GRAVITY * np.array((0, 1))
 
-        if(self.curPos[1] > 600):
+        if(self.curPos[1] > HEIGHT):
+            self.curPos[1] = HEIGHT
             self.velocity[1] = -abs(self.velocity[1]) * RESTITUTION
+            self.velocity[0] *= FRICTION
+        
+        if(self.curPos[0] > WIDTH):
+            self.curPos[0] = WIDTH
+            self.velocity[0] = -abs(self.velocity[0]) * RESTITUTION
+        
+        if(self.curPos[0] < 0):
+            self.curPos[0] = 0
+            self.velocity[0] = abs(self.velocity[0]) * RESTITUTION
     
         self.curPos += self.velocity*dt + 0.5*netForce/self.mass*dt*dt
         self.velocity += netForce/self.mass*dt
@@ -92,12 +110,15 @@ class SpringMassBody():
         self.springs = springs
 
     def update(self):
-        if self.springs:
-            for spring in self.springs:
-                spring.update()
+        self.update_springs()
         
         for point in self.points:
             point.update(TIME_SKIP)
+    
+    def update_springs(self):
+        if self.springs:
+            for spring in self.springs:
+                spring.update()
 
     def draw(self, screen):
         if self.springs:
