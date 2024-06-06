@@ -19,7 +19,6 @@ clock = pyg.time.Clock()
 coord = (100, 50)
 
 env = Environment(Settings.WIDTH, Settings.HEIGHT)
-env.add_dynamic_body(Shape.ReinforcedTriangle(origin=(300, -700), length=5, gap=50, stiffness=70, damping=10))
 
 cur = time.time()
 prev = cur
@@ -54,6 +53,9 @@ while running:
         elif event.type == pyg.KEYDOWN:
             if event.key == pyg.K_a:
                 GUI.add_shape_prompt(env=env)
+            
+            if event.key == pyg.K_r:
+                GUI.reset_env_prompt(env=env)
                 
                 
 

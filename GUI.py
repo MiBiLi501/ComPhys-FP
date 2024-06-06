@@ -4,10 +4,24 @@ import Shape
 
 from Environment import Environment
 
+def reset_env_prompt(env: Environment):
+    def success():
+        env.dynamicObjects = list()
+        confirmation.destroy()
+
+    confirmation = tk.Tk()
+    confirmation.title("Reset confirmation")
+    tk.Label(confirmation, text="Are you sure you want to reset the environment?").pack()
+
+    tk.Button(confirmation, text="confirm", command=lambda: success()).pack()
+    confirmation.mainloop()
+    print("reset")
+
 
 def add_shape_prompt(env: Environment):
     add_shape = tk.Tk()
     add_shape.title("Add Shape")
+    # add_shape.geometry("300x400")
     tk.Label(add_shape, text="Select Shape").pack()
 
     shape_var = tk.StringVar()
@@ -52,13 +66,13 @@ def add_shape_prompt(env: Environment):
             tk.Label(properties, text="length").grid(column=2, row=0)
             length_var = tk.Text(properties, height=1, width=5)
             length_var.grid(column=2, row=1)
-            tk.Label(properties, text="gap y").grid(column=3, row=0)
+            tk.Label(properties, text="gap").grid(column=3, row=0)
             gap_var = tk.Text(properties, height=1, width=5)
             gap_var.grid(column=3, row=1)
             tk.Label(properties, text="stiffness").grid(column=1, row=2)
             stiffness_var = tk.Text(properties, height=1, width=5)
             stiffness_var.grid(column=1, row=3)
-            tk.Label(properties, text="dampiness y").grid(column=2, row=2)
+            tk.Label(properties, text="damping").grid(column=2, row=2)
             dampiness_var = tk.Text(properties, height=1, width=5)
             dampiness_var.grid(column=2, row=3)
 
@@ -102,13 +116,13 @@ def add_shape_prompt(env: Environment):
             tk.Label(properties, text="length").grid(column=3, row=0)
             height_var = tk.Text(properties, height=1, width=5)
             height_var.grid(column=3, row=1)
-            tk.Label(properties, text="gap y").grid(column=4, row=0)
+            tk.Label(properties, text="gap").grid(column=4, row=0)
             gap_var = tk.Text(properties, height=1, width=5)
             gap_var.grid(column=4, row=1)
             tk.Label(properties, text="stiffness").grid(column=1, row=2)
             stiffness_var = tk.Text(properties, height=1, width=5)
             stiffness_var.grid(column=1, row=3)
-            tk.Label(properties, text="dampiness y").grid(column=3, row=2)
+            tk.Label(properties, text="damping").grid(column=3, row=2)
             dampiness_var = tk.Text(properties, height=1, width=5)
             dampiness_var.grid(column=3, row=3)
 
