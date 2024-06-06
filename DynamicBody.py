@@ -2,7 +2,7 @@ import numpy as np
 import pygame as pyg
 import sys
 
-from math import hypot, tanh
+from math import hypot, tanh, sqrt
 from Settings import *
 
 class Point():
@@ -46,6 +46,10 @@ class Point():
         
         netForce += self.mass * GRAVITY * np.array((0, 1))
 
+        if(self.curPos[1] < 0):
+            self.curPos[1] = 0
+            self.velocity[1] = abs(self.velocity[1]) * RESTITUTION
+
         if(self.curPos[1] > HEIGHT):
             self.curPos[1] = HEIGHT
             self.velocity[1] = -abs(self.velocity[1]) * RESTITUTION
@@ -61,6 +65,9 @@ class Point():
     
         self.curPos += self.velocity*dt + 0.5*netForce/self.mass*dt*dt
         self.velocity += netForce/self.mass*dt
+        velArray = self.velocity
+        velArray = velArray*velArray
+        if(velArray[0]+velArray[1] > MAX_VELOCITY**2): self.velocity *= MAX_VELOCITY/sqrt(velArray[0] + velArray[1])
         
     def add_spring(self, spring):
         self.connectedSpring.append(spring)
