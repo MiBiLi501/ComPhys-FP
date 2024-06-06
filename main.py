@@ -2,11 +2,12 @@ import pygame as pyg
 import time
 from Environment import Environment
 from DynamicBody import *
+import GUI
 import Shape
 import Settings
 
 pyg.font.init()
-# WINDOW_SIZE = 
+
 screen = pyg.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
 
 pyg.display.set_caption("Soft Body simulation")
@@ -28,16 +29,10 @@ running = True
 
 freeze = False
 
-
-gray = (128, 128, 128)
-transparent_gray = (255, 255, 255, 128)  
-
-sidebar_width = int(Settings.WIDTH * 0.2)
-sidebar = pyg.Surface((sidebar_width, Settings.HEIGHT)) # Adjusted to HEIGHT instead of WIDTH
-sidebar.fill(gray)
-
 font = pyg.font.SysFont(None, 36)
 font = pyg.font.SysFont("Arial", 28)
+
+
 
 while running:
     for event in pyg.event.get():
@@ -55,6 +50,12 @@ while running:
         elif event.type == pyg.MOUSEMOTION:
             if env.get_select():
                 env.get_select().set_curPos(event.pos)
+        
+        elif event.type == pyg.KEYDOWN:
+            if event.key == pyg.K_a:
+                GUI.add_shape_prompt(env=env)
+                
+                
 
 
     if not freeze:  
@@ -85,7 +86,5 @@ while running:
         text_rect = text.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
         screen.blit(text, text_rect)
 
-    screen.blit(sidebar, (Settings.WIDTH - sidebar_width, 0)) # Adjusted sidebar position
     input_editor_text = font.render("Input Editor", True, (255, 255, 255)) # Added text for Input Editor
-    sidebar.blit(input_editor_text, (10, 10)) # Added blitting text onto the sidebar
     pyg.display.flip()
